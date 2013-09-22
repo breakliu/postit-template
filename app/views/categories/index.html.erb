@@ -1,0 +1,12 @@
+<%= link_to 'Add Category', new_category_path %>
+
+<ul>
+<% @categories.each do |c| %>
+  <li>
+    <%= c.name %>
+    <%= c.created_at %>
+    <%= c.updated_at %>
+    <%= link_to "Edit", edit_category_path(c) %>
+  </li>
+<% end %>
+</ul>

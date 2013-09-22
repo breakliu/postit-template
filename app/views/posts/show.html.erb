@@ -1,0 +1,32 @@
+<ul>
+  <li>Title: <%= @post.title %></li>
+  <li>Url: <%= @post.url %></li>
+  <li>Descripton: <%= @post.description %></li>
+</ul>
+
+
+
+<%= render 'shared/error', obj: @comment %>
+
+<%= form_for [@post, @comment] do |f| %>
+  <%= f.label :content %>
+  <%= f.text_area :content, rows: 5 %>
+  
+  <div class="control-group">
+    <%= f.submit "Leave a comment", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+Comments:
+<ul>
+  <% @post.comments.each do |c| %>
+  <li>
+    <%= link_to '+', vote_post_comment_path(@post, c, vote: true), method: :post, class: 'btn btn-mini btn-info' if login? %>
+    <%= c.total_votes %>
+    <%= link_to '-', vote_post_comment_path(@post, c, vote: false), method: :post, class: 'btn btn-mini btn-danger' if login? %>
+    <%= c.content %>
+  </li>
+  <% end %>
+</ul>
+
+<%= link_to "Post List", posts_path %>
