@@ -21,9 +21,9 @@ Comments:
 <ul>
   <% @post.comments.each do |c| %>
   <li>
-    <%= link_to '+', vote_post_comment_path(@post, c, vote: true), method: :post, class: 'btn btn-mini btn-info' if login? %>
-    <%= c.total_votes %>
-    <%= link_to '-', vote_post_comment_path(@post, c, vote: false), method: :post, class: 'btn btn-mini btn-danger' if login? %>
+    <%= link_to '+', vote_post_comment_path(@post.slug, c, vote: true), method: :post, remote: true, class: 'btn btn-mini btn-info' if login? %>
+    <span id="total_votes_<%= c.id %>"><%= c.total_votes %></span>
+    <%= link_to '-', vote_post_comment_path(@post.slug, c, vote: false), method: :post, remote: true, class: 'btn btn-mini btn-danger' if login? %>
     <%= c.content %>
   </li>
   <% end %>

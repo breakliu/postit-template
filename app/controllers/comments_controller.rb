@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def create
     #binding.pry
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by(slug: params[:post_id])
     @comment = @post.comments.build(set_comment)
     if @comment.save
       flash[:notice] = "You leave a cool comment!"
@@ -15,21 +15,26 @@ class CommentsController < ApplicationController
 
   def vote
     #binding.pry
-    @post = Post.find(params[:post_id])
+    @post = Post.find_by(slug: params[:post_id])
     @comment = Comment.find(params[:id])
-    if @comment.votes.find_by(user: current_user)
-      flash[:alert] = 'A user can vote onlhy once!'
-      redirect_to post_path(@post)
-    else
+    # if @comment.votes.find_by(user: current_user)
+    #   flash[:alert] = 'A user can vote onlhy once!'
+    #   redirect_to post_path(@post)
+    # else
       @comment.votes.build(vote: params[:vote], user: current_user)
       if @comment.save
-        flash[:notice] = 'You vote!'
-        redirect_to post_path(@post)
+        respond_to do |format|
+          format.html do
+            flash[:notice] = 'You vote!'
+            redirect_to post_path(@post)
+          end
+          format.js
+        end
       else
         flash[:alert] = 'You vote failed!'
         redirect_to post_path(@post)
       end
-    end
+    # end
   end
 
   private

@@ -19,4 +19,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def require_admin
+    if not login? or not current_user.is_admin?
+      flash[:alert] = "You don't have privellege!"
+      redirect_to root_path
+    end
+  end
 end

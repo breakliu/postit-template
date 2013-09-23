@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
   def check_username
     #errors.add(:base, 'Must be friends to leave a comment')
   end
+
+  def is_admin?
+    self.role == 'admin'
+  end
 end
