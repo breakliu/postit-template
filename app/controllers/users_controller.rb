@@ -3,6 +3,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    @user = current_user
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -14,10 +18,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(current_user.id)
+    if @user.update_attributes(user_params)
+      flash[:notice] = "Edit user successful!"
+      redirect_to posts_path
+    else
+      render :edit
+    end
+  end
+
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password, :time_zone)
   end
 end

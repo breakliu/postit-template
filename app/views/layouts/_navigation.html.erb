@@ -8,6 +8,7 @@
   <li><%= link_to 'Category', categories_path %></li>
 
   <% if login? %>
+    <li><%= link_to 'Profile', edit_user_path(current_user) %></li>
     <li><%= link_to 'Logout', logout_path %></li>
   <% else %>
     <li><%= link_to 'Register', new_user_path %></li>

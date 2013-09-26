@@ -7,7 +7,7 @@
     <span id="total_votes_<%= p.id %>"><%= p.total_votes %></span>
     <%= link_to '-', vote_post_path(p.slug, vote: false), method: :post, remote: true, class: 'btn btn-mini btn-danger' if login? %>
     <%= link_to p.title, post_path(p.slug) %>
-    <%= p.created_at %>
+    <%= time_zone_str(p.created_at) %>
     <%= p.updated_at %>
     <%= link_to "Edit", edit_post_path(p.slug) %>
   </li>
